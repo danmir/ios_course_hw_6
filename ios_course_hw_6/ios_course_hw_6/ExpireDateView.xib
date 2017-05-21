@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExpireDateView" customModule="ios_course_hw_4" customModuleProvider="target">
+            <connections>
+                <outlet property="destroyDatePicker" destination="Hue-hu-tJC" id="uqV-49-B35"/>
+                <outlet property="destroyDateSwitch" destination="e0m-RQ-EQm" id="kvp-mY-ES6"/>
+                <outlet property="innerStack" destination="Y4e-Bj-sq8" id="uU5-zV-9gS"/>
+                <outlet property="stack" destination="T4A-Hr-CwP" id="oA6-Do-jvN"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="MlB-px-DXl">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="320"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="T4A-Hr-CwP">
+                    <rect key="frame" x="58" y="5" width="320" height="305"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Y4e-Bj-sq8">
+                            <rect key="frame" x="65" y="0.0" width="190" height="31"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Use destroy date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXq-bI-8x2">
+                                    <rect key="frame" x="0.0" y="0.0" width="131" height="31"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e0m-RQ-EQm" userLabel="DestroyDateSwitch">
+                                    <rect key="frame" x="141" y="0.0" width="51" height="31"/>
+                                    <connections>
+                                        <action selector="destroyDateSwitchChanged:" destination="-1" eventType="valueChanged" id="KVM-ij-4ud"/>
+                                    </connections>
+                                </switch>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="31" id="kUR-5R-CAd"/>
+                            </constraints>
+                        </stackView>
+                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Hue-hu-tJC" userLabel="DestroyDatePicker">
+                            <rect key="frame" x="0.0" y="36" width="320" height="269"/>
+                            <date key="date" timeIntervalSinceReferenceDate="515140484.93588001">
+                                <!--2017-04-29 06:34:44 +0000-->
+                            </date>
+                        </datePicker>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Hue-hu-tJC" firstAttribute="centerX" secondItem="T4A-Hr-CwP" secondAttribute="centerX" id="Ree-a7-gEH"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="T4A-Hr-CwP" firstAttribute="centerX" secondItem="MlB-px-DXl" secondAttribute="centerX" id="AKW-7d-FaP"/>
+                <constraint firstAttribute="bottom" secondItem="T4A-Hr-CwP" secondAttribute="bottom" constant="10" id="FPZ-Bc-xiA"/>
+                <constraint firstItem="T4A-Hr-CwP" firstAttribute="top" secondItem="MlB-px-DXl" secondAttribute="top" constant="5" id="wMu-nh-QYo"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="17" y="-111"/>
+        </view>
+    </objects>
+</document>

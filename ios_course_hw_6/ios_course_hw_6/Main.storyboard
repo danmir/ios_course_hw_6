@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ke7-QM-br1">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Notes View Controller-->
+        <scene sceneID="AjM-c9-0od">
+            <objects>
+                <viewController id="D1o-5R-Doz" customClass="NotesViewController" customModule="ios_course_hw_6" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yy8-iy-YWd"/>
+                        <viewControllerLayoutGuide type="bottom" id="XTw-d2-AbJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8MR-hF-ybK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XBY-nC-EP7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mDl-d7-yMV">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NoteCell" id="nyg-8e-1X5" customClass="NoteCollectionViewCell" customModule="ios_course_hw_6" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                        <connections>
+                                            <segue destination="wpH-kr-EZx" kind="show" identifier="editNoteSegue" id="xPA-Gm-Ydn"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o69-OA-0Jr">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ydt-rn-fct"/>
+                                    <barButtonItem style="plain" id="bSw-Xj-TjU">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="ZPb-En-YMO">
+                                            <rect key="frame" x="128" y="7" width="118" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </slider>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="st5-In-e37"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XBY-nC-EP7" firstAttribute="top" secondItem="8MR-hF-ybK" secondAttribute="top" id="WGQ-t1-FoO"/>
+                            <constraint firstItem="XBY-nC-EP7" firstAttribute="leading" secondItem="8MR-hF-ybK" secondAttribute="leading" id="bge-aX-npu"/>
+                            <constraint firstItem="XTw-d2-AbJ" firstAttribute="top" secondItem="XBY-nC-EP7" secondAttribute="bottom" id="xGs-oy-fv3"/>
+                            <constraint firstAttribute="trailing" secondItem="XBY-nC-EP7" secondAttribute="trailing" id="yJm-Dz-ZcI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Sha-kz-ffk">
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="edit" id="pl1-qb-vxa"/>
+                            <barButtonItem systemItem="refresh" id="ln6-ft-BIV">
+                                <connections>
+                                    <action selector="retryButton:" destination="D1o-5R-Doz" id="gBd-rN-hdl"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cY5-jW-4IF">
+                            <connections>
+                                <segue destination="wpH-kr-EZx" kind="show" identifier="addNoteSegue" id="Fox-Yo-Vgi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="notesCollectionView" destination="XBY-nC-EP7" id="r7k-hh-bj2"/>
+                        <outlet property="toolbar" destination="o69-OA-0Jr" id="Ni6-nU-XrI"/>
+                        <outlet property="widthChangeSlider" destination="ZPb-En-YMO" id="eds-7R-dbr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="upg-z0-SZn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2972" y="171.36431784107947"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="B3X-Ex-KHr">
+            <objects>
+                <viewController id="wpH-kr-EZx" customClass="EditNoteViewController" customModule="ios_course_hw_6" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5qJ-nI-Rhp"/>
+                        <viewControllerLayoutGuide type="bottom" id="L02-Bh-Rqb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DW5-oY-blK" customClass="EditNoteView" customModule="ios_course_hw_6" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="VrT-wo-Fil">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="EDF-Vz-KTc">
+                            <connections>
+                                <segue destination="UQ8-x1-ehY" kind="unwind" identifier="backButton" unwindAction="unwindToMenu:" id="gS9-a0-eX9"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="gdh-mH-JS2">
+                            <connections>
+                                <segue destination="UQ8-x1-ehY" kind="unwind" identifier="saveButton" unwindAction="unwindToMenu:" id="Iqz-BW-dwb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="editNoteView" destination="DW5-oY-blK" id="F5X-eb-ISY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XFg-GK-9z9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="UQ8-x1-ehY" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4296.8000000000002" y="170.46476761619192"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Y4E-N5-Qjs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ke7-QM-br1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5j2-yB-nPe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="D1o-5R-Doz" kind="relationship" relationship="rootViewController" id="L86-Vc-yH0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rUP-en-ngD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2032.8" y="171.36431784107947"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Fox-Yo-Vgi"/>
+    </inferredMetricsTieBreakers>
+</document>
