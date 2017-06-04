@@ -20,13 +20,10 @@
 		934581021ECED24D003B71DE /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581011ECED24D003B71DE /* URLSessionTaskOperation.swift */; };
 		934581041ECED80C003B71DE /* NSLock+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581031ECED80C003B71DE /* NSLock+Operations.swift */; };
 		934581061ECF04A9003B71DE /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581051ECF04A9003B71DE /* APIManager.swift */; };
-		9345810A1ED01B05003B71DE /* SyncObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581091ED01B05003B71DE /* SyncObj.swift */; };
+		9345810A1ED01B05003B71DE /* APIRequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581091ED01B05003B71DE /* APIRequestStatus.swift */; };
 		9345810E1ED02F11003B71DE /* CachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9345810D1ED02F11003B71DE /* CachePolicy.swift */; };
 		934581121ED038CB003B71DE /* APINotesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581111ED038CB003B71DE /* APINotesOperation.swift */; };
 		934581141ED05EE7003B71DE /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581131ED05EE7003B71DE /* Dispatcher.swift */; };
-		934581161ED07FFA003B71DE /* SchedulerWeightedPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581151ED07FFA003B71DE /* SchedulerWeightedPolicy.swift */; };
-		934581181ED08471003B71DE /* SchedulerRandomPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581171ED08471003B71DE /* SchedulerRandomPolicy.swift */; };
-		9345811A1ED08577003B71DE /* SchedulerPolicyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581191ED08577003B71DE /* SchedulerPolicyProtocol.swift */; };
 		934581231ED16B74003B71DE /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581201ED16B73003B71DE /* NotesViewController.swift */; };
 		934581241ED16B74003B71DE /* NotesCollectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581211ED16B73003B71DE /* NotesCollectionData.swift */; };
 		934581251ED16B74003B71DE /* NotesCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581221ED16B73003B71DE /* NotesCollectionLayout.swift */; };
@@ -78,13 +75,10 @@
 		934581011ECED24D003B71DE /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionTaskOperation.swift; sourceTree = "<group>"; };
 		934581031ECED80C003B71DE /* NSLock+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLock+Operations.swift"; sourceTree = "<group>"; };
 		934581051ECF04A9003B71DE /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		934581091ED01B05003B71DE /* SyncObj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncObj.swift; sourceTree = "<group>"; };
+		934581091ED01B05003B71DE /* APIRequestStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestStatus.swift; sourceTree = "<group>"; };
 		9345810D1ED02F11003B71DE /* CachePolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachePolicy.swift; sourceTree = "<group>"; };
 		934581111ED038CB003B71DE /* APINotesOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APINotesOperation.swift; sourceTree = "<group>"; };
 		934581131ED05EE7003B71DE /* Dispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
-		934581151ED07FFA003B71DE /* SchedulerWeightedPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerWeightedPolicy.swift; sourceTree = "<group>"; };
-		934581171ED08471003B71DE /* SchedulerRandomPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerRandomPolicy.swift; sourceTree = "<group>"; };
-		934581191ED08577003B71DE /* SchedulerPolicyProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerPolicyProtocol.swift; sourceTree = "<group>"; };
 		934581201ED16B73003B71DE /* NotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		934581211ED16B73003B71DE /* NotesCollectionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesCollectionData.swift; sourceTree = "<group>"; };
 		934581221ED16B73003B71DE /* NotesCollectionLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesCollectionLayout.swift; sourceTree = "<group>"; };
@@ -172,9 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				934581131ED05EE7003B71DE /* Dispatcher.swift */,
-				934581191ED08577003B71DE /* SchedulerPolicyProtocol.swift */,
-				934581171ED08471003B71DE /* SchedulerRandomPolicy.swift */,
-				934581151ED07FFA003B71DE /* SchedulerWeightedPolicy.swift */,
 			);
 			name = Dispatcher;
 			sourceTree = "<group>";
@@ -182,7 +173,7 @@
 		9345811C1ED09412003B71DE /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				934581091ED01B05003B71DE /* SyncObj.swift */,
+				934581091ED01B05003B71DE /* APIRequestStatus.swift */,
 				934580F91ECDBA9D003B71DE /* AsyncOperation.swift */,
 				934581011ECED24D003B71DE /* URLSessionTaskOperation.swift */,
 				934580FB1ECDBACB003B71DE /* FetchCacheOperation.swift */,
@@ -400,7 +391,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9345812F1ED16BB2003B71DE /* ColorPickerViewController.swift in Sources */,
-				9345811A1ED08577003B71DE /* SchedulerPolicyProtocol.swift in Sources */,
 				9345812C1ED16BB2003B71DE /* ColorPickerPresentationManager.swift in Sources */,
 				934581331ED16BC4003B71DE /* EditNoteViewController.swift in Sources */,
 				934580F81ECDB865003B71DE /* NotesManager.swift in Sources */,
@@ -409,7 +399,7 @@
 				9345814B1ED16C18003B71DE /* ExpireDateView.swift in Sources */,
 				934581001ECDFA3B003B71DE /* StoreCacheOperation.swift in Sources */,
 				934581401ED16BF9003B71DE /* ColorPreviewItemView.swift in Sources */,
-				9345810A1ED01B05003B71DE /* SyncObj.swift in Sources */,
+				9345810A1ED01B05003B71DE /* APIRequestStatus.swift in Sources */,
 				934581041ECED80C003B71DE /* NSLock+Operations.swift in Sources */,
 				934581601ED16C67003B71DE /* CommonView.swift in Sources */,
 				934581021ECED24D003B71DE /* URLSessionTaskOperation.swift in Sources */,
@@ -428,14 +418,12 @@
 				934581551ED16C38003B71DE /* ColorPickerView.swift in Sources */,
 				9345813A1ED16BD2003B71DE /* NoteCollectionViewCell.swift in Sources */,
 				934581581ED16C38003B71DE /* ColorCursor.swift in Sources */,
-				934581161ED07FFA003B71DE /* SchedulerWeightedPolicy.swift in Sources */,
 				934581651ED16D0A003B71DE /* DummyNotebook.swift in Sources */,
 				9345815C1ED16C38003B71DE /* GradientHelper.swift in Sources */,
 				934581381ED16BD2003B71DE /* NoteEditMark.swift in Sources */,
 				934581121ED038CB003B71DE /* APINotesOperation.swift in Sources */,
 				934EB4161ED2F27D001409F8 /* RetryOperation.swift in Sources */,
 				934580E01ECDB43B003B71DE /* AppDelegate.swift in Sources */,
-				934581181ED08471003B71DE /* SchedulerRandomPolicy.swift in Sources */,
 				934581231ED16B74003B71DE /* NotesViewController.swift in Sources */,
 				934581061ECF04A9003B71DE /* APIManager.swift in Sources */,
 				934581571ED16C38003B71DE /* ColorMapView.swift in Sources */,

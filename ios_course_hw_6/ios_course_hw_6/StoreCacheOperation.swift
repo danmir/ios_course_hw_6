@@ -16,20 +16,20 @@ enum StoreCacheOperationError: Error {
 class StoreCacheOperation: AsyncOperation {
     var complitionHandler: (Void) -> Void
     let cacheFile: URL
-    let syncObj: SyncObj
+    let apiRequestStatus: APIRequestStatus
     let cachePolicy: CachePolicy
     
-    init(cacheFile: URL, syncObj: SyncObj, cachePolicy: CachePolicy, complitionHandler: @escaping (Void) -> Void) {
+    init(cacheFile: URL, apiRequestStatus: APIRequestStatus, cachePolicy: CachePolicy, complitionHandler: @escaping (Void) -> Void) {
         self.complitionHandler = complitionHandler
         self.cacheFile = cacheFile
-        self.syncObj = syncObj
+        self.apiRequestStatus = apiRequestStatus
         self.cachePolicy = cachePolicy
         super.init()
     }
     
     override func main() {
-        if syncObj.state == .Failed || syncObj.state == .Cancelled {
-            print("Prev op status \(syncObj.state). Nothing to do with cache")
+        if apiRequestStatus.state == .Failed || apiRequestStatus.state == .Cancelled {
+            print("Prev op status \(apiRequestStatus.state). Nothing to do with cache")
             self.complitionHandler()
             self.finish()
             return
@@ -51,8 +51,8 @@ class StoreCacheOperation: AsyncOperation {
             }
         } catch {
             print("Unable to parse")
-            syncObj.state = .Failed
-            syncObj.add(error: StoreCacheOperationError.parseTmpError)
+            apiRequestStatus.state = .Failed
+            apiRequestStatus.add(error: StoreCacheOperationError.parseTmpError)
         }
         
         self.complitionHandler()

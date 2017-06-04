@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SyncObj {
+class APIRequestStatus {
     enum State: Int {
         case New
         case Sucsess
@@ -16,7 +16,7 @@ class SyncObj {
         case Cancelled
     }
     
-    static let shared = SyncObj()
+    static let shared = APIRequestStatus()
     
     var networkTries = 0
     

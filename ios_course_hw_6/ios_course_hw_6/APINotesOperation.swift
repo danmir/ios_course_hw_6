@@ -26,7 +26,7 @@ class APINotesOperation: AsyncOperation {
     let completeHandler: (Error?) -> Void
     let cacheFile: URL
     let method: NetworkMethod
-    let syncObj: SyncObj
+    let apiRequestStatus: APIRequestStatus
     let note: Note?
     
     var task: URLSessionTask?
@@ -34,10 +34,10 @@ class APINotesOperation: AsyncOperation {
     fileprivate var observerRemoved = false
     fileprivate let stateLock = NSLock()
     
-    init(method: NetworkMethod, note: Note? = nil, cacheFile: URL, syncObj: SyncObj, completeHandler: @escaping (Error?) -> Void) {
+    init(method: NetworkMethod, note: Note? = nil, cacheFile: URL, apiRequestStatus: APIRequestStatus, completeHandler: @escaping (Error?) -> Void) {
         self.completeHandler = completeHandler
         self.cacheFile = cacheFile
-        self.syncObj = syncObj
+        self.apiRequestStatus = apiRequestStatus
         self.method = method
         self.note = note
         
@@ -56,9 +56,9 @@ class APINotesOperation: AsyncOperation {
         }
 
         self.task = URLSession.shared.dataTask(with: request) { data, response, err in
-            print("Network current try: \(syncObj.networkTries)")
-            self.syncObj.networkTries += 1
-            self.syncObj.resetState()
+            print("Network current try: \(apiRequestStatus.networkTries)")
+            self.apiRequestStatus.networkTries += 1
+            self.apiRequestStatus.resetState()
             self.requestFinished(data: data, response: response, error: err)
         }
     }
@@ -78,18 +78,18 @@ class APINotesOperation: AsyncOperation {
                 }
                 catch {
                     print("Data write error \(error)")
-                    syncObj.state = .Failed
-                    syncObj.add(error: APINotesOperationError.saveTmpError)
+                    apiRequestStatus.state = .Failed
+                    apiRequestStatus.add(error: APINotesOperationError.saveTmpError)
                 }
-                syncObj.state = .Sucsess
+                apiRequestStatus.state = .Sucsess
             } else {
                 print(response as Any, json as Any)
-                syncObj.state = .Failed
-                syncObj.add(error: APINotesOperationError.serverError)
+                apiRequestStatus.state = .Failed
+                apiRequestStatus.add(error: APINotesOperationError.serverError)
             }
         } else {
-            syncObj.state = .Failed
-            syncObj.add(error: APINotesOperationError.serverError)
+            apiRequestStatus.state = .Failed
+            apiRequestStatus.add(error: APINotesOperationError.serverError)
         }
         completeHandler(error)
         finish()
@@ -102,7 +102,7 @@ class APINotesOperation: AsyncOperation {
     
     override func main() {
         //task?.addObserver(self, forKeyPath: "state", options: NSKeyValueObservingOptions(), context: &URLSessionTaskOperationKVOContext)
-        if syncObj.state == .Sucsess {
+        if apiRequestStatus.state == .Sucsess {
             completeHandler(nil)
             finish()
         } else {

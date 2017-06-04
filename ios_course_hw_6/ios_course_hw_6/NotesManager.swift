@@ -38,12 +38,12 @@ class NotesManager {
         return cachesFolder.appendingPathComponent(cacheFileName)
     }
     
-    func updateOperations(cacheFile: URL, syncObj: SyncObj, cachePolicy: CachePolicy) ->
+    func updateOperations(cacheFile: URL, apiRequestStatus: APIRequestStatus, cachePolicy: CachePolicy) ->
         (getNotesOperation: APINotesOperation, storeCacheOperation: StoreCacheOperation) {
-            let getNotesOperation = APINotesOperation(method: .GET, cacheFile: cacheFile, syncObj: syncObj) { error in
+            let getNotesOperation = APINotesOperation(method: .GET, cacheFile: cacheFile, apiRequestStatus: apiRequestStatus) { error in
                 print("getNotesOperationHandler")
             }
-            let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, syncObj: syncObj, cachePolicy: cachePolicy) {
+            let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
                 print("storeCacheHandler after get")
             }
             getNotesOperation.taskQOS = .network
@@ -56,17 +56,17 @@ class NotesManager {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.replace)
         
-        let syncObj = SyncObj()
+        let apiRequestStatus = APIRequestStatus()
         
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, syncObj: syncObj, cachePolicy: cachePolicy) {
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after get")
-            complitionHandler(syncObj.lastError)
+            complitionHandler(apiRequestStatus.lastError)
         }
         storeCacheOperation.taskQOS = .cache
 
         var lastGetNotesOperation: APINotesOperation?
         for _ in 0..<APIManager.shared.maxRetriesCount {
-            let getNotesOperation = APINotesOperation(method: .GET, cacheFile: cacheFile, syncObj: syncObj) { error in
+            let getNotesOperation = APINotesOperation(method: .GET, cacheFile: cacheFile, apiRequestStatus: apiRequestStatus) { error in
                 print("getNotesOperationHandler")
             }
             getNotesOperation.taskQOS = .network
@@ -84,12 +84,12 @@ class NotesManager {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.add)
         
-        let syncObj = SyncObj()
+        let apiRequestStatus = APIRequestStatus()
         
-        let postNoteOperation = APINotesOperation(method: .POST, note: note, cacheFile: cacheFile, syncObj: syncObj, completeHandler: { error in print("postNoteOperationHandler") })
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, syncObj: syncObj, cachePolicy: cachePolicy) {
+        let postNoteOperation = APINotesOperation(method: .POST, note: note, cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, completeHandler: { error in print("postNoteOperationHandler") })
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after add")
-            complitionHandler(syncObj.lastError)
+            complitionHandler(apiRequestStatus.lastError)
         }
         
         storeCacheOperation.addDependency(postNoteOperation)
@@ -104,12 +104,12 @@ class NotesManager {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.edit)
         
-        let syncObj = SyncObj()
+        let apiRequestStatus = APIRequestStatus()
         
-        let putNoteOperation = APINotesOperation(method: .PUT, note: note, cacheFile: cacheFile, syncObj: syncObj, completeHandler: { error in print("putNoteOperationHandler") })
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, syncObj: syncObj, cachePolicy: cachePolicy) {
+        let putNoteOperation = APINotesOperation(method: .PUT, note: note, cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, completeHandler: { error in print("putNoteOperationHandler") })
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after add")
-            complitionHandler(syncObj.lastError)
+            complitionHandler(apiRequestStatus.lastError)
         }
         
         storeCacheOperation.addDependency(putNoteOperation)
@@ -124,12 +124,12 @@ class NotesManager {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.delete)
         
-        let syncObj = SyncObj()
+        let apiRequestStatus = APIRequestStatus()
         
-        let deleteNoteOperation = APINotesOperation(method: .DELETE, note: note, cacheFile: cacheFile, syncObj: syncObj) { error in print("deleteNoteOperationHandler") }
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, syncObj: syncObj, cachePolicy: cachePolicy) {
+        let deleteNoteOperation = APINotesOperation(method: .DELETE, note: note, cacheFile: cacheFile, apiRequestStatus: apiRequestStatus) { error in print("deleteNoteOperationHandler") }
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after delete")
-            complitionHandler(syncObj.lastError)
+            complitionHandler(apiRequestStatus.lastError)
         }
         
         storeCacheOperation.addDependency(deleteNoteOperation)

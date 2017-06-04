@@ -10,11 +10,11 @@ import Foundation
 
 class RetryOperation: AsyncOperation {
     let complitionHandler: (Void) -> Void
-    let syncObj: SyncObj
+    let apiRequestStatus: APIRequestStatus
     
-    init(syncObj: SyncObj, complitionHandler: @escaping (Void) -> Void) {
+    init(apiRequestStatus: APIRequestStatus, complitionHandler: @escaping (Void) -> Void) {
         self.complitionHandler = complitionHandler
-        self.syncObj = syncObj
+        self.apiRequestStatus = apiRequestStatus
         super.init()
     }
     
