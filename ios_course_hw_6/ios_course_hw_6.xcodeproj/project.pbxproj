@@ -57,6 +57,12 @@
 		934581631ED16C85003B71DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 934581621ED16C85003B71DE /* Main.storyboard */; };
 		934581651ED16D0A003B71DE /* DummyNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934581641ED16D0A003B71DE /* DummyNotebook.swift */; };
 		934EB4161ED2F27D001409F8 /* RetryOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934EB4151ED2F27D001409F8 /* RetryOperation.swift */; };
+		93B228281EE4206C002AD450 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 93B228261EE4206C002AD450 /* Model.xcdatamodeld */; };
+		93B2282F1EE44134002AD450 /* NoteEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B2282D1EE44134002AD450 /* NoteEntity+CoreDataClass.swift */; };
+		93B228301EE44134002AD450 /* NoteEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B2282E1EE44134002AD450 /* NoteEntity+CoreDataProperties.swift */; };
+		93B228321EE44C3F002AD450 /* LoadModelOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228311EE44C3F002AD450 /* LoadModelOperation.swift */; };
+		93B228341EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228331EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift */; };
+		93B228361EE58828002AD450 /* Date+Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228351EE58828002AD450 /* Date+Interval.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +118,12 @@
 		934581621ED16C85003B71DE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		934581641ED16D0A003B71DE /* DummyNotebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyNotebook.swift; sourceTree = "<group>"; };
 		934EB4151ED2F27D001409F8 /* RetryOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetryOperation.swift; sourceTree = "<group>"; };
+		93B228271EE4206C002AD450 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		93B2282D1EE44134002AD450 /* NoteEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		93B2282E1EE44134002AD450 /* NoteEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NoteEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93B228311EE44C3F002AD450 /* LoadModelOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModelOperation.swift; sourceTree = "<group>"; };
+		93B228331EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesViewController+ NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
+		93B228351EE58828002AD450 /* Date+Interval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Interval.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +196,7 @@
 		9345811D1ED09426003B71DE /* App operations */ = {
 			isa = PBXGroup;
 			children = (
+				93B228311EE44C3F002AD450 /* LoadModelOperation.swift */,
 				934EB4151ED2F27D001409F8 /* RetryOperation.swift */,
 				934581111ED038CB003B71DE /* APINotesOperation.swift */,
 				934580FF1ECDFA3B003B71DE /* StoreCacheOperation.swift */,
@@ -197,6 +210,9 @@
 				934580F11ECDB53D003B71DE /* DummyNotebookCache.swift */,
 				9345810D1ED02F11003B71DE /* CachePolicy.swift */,
 				934580F21ECDB53D003B71DE /* Note.swift */,
+				93B228261EE4206C002AD450 /* Model.xcdatamodeld */,
+				93B2282D1EE44134002AD450 /* NoteEntity+CoreDataClass.swift */,
+				93B2282E1EE44134002AD450 /* NoteEntity+CoreDataProperties.swift */,
 			);
 			name = Cache;
 			sourceTree = "<group>";
@@ -217,6 +233,7 @@
 				934581201ED16B73003B71DE /* NotesViewController.swift */,
 				934581211ED16B73003B71DE /* NotesCollectionData.swift */,
 				934581221ED16B73003B71DE /* NotesCollectionLayout.swift */,
+				93B228331EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift */,
 			);
 			name = NotesCollectionViewController;
 			sourceTree = "<group>";
@@ -287,6 +304,7 @@
 				9345815F1ED16C67003B71DE /* CommonControl.swift */,
 				934580F51ECDB564003B71DE /* Commons.swift */,
 				934581031ECED80C003B71DE /* NSLock+Operations.swift */,
+				93B228351EE58828002AD450 /* Date+Interval.swift */,
 			);
 			name = Commons;
 			sourceTree = "<group>";
@@ -392,10 +410,13 @@
 			files = (
 				9345812F1ED16BB2003B71DE /* ColorPickerViewController.swift in Sources */,
 				9345812C1ED16BB2003B71DE /* ColorPickerPresentationManager.swift in Sources */,
+				93B228301EE44134002AD450 /* NoteEntity+CoreDataProperties.swift in Sources */,
 				934581331ED16BC4003B71DE /* EditNoteViewController.swift in Sources */,
 				934580F81ECDB865003B71DE /* NotesManager.swift in Sources */,
 				934581611ED16C67003B71DE /* CommonControl.swift in Sources */,
+				93B228341EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift in Sources */,
 				934581141ED05EE7003B71DE /* Dispatcher.swift in Sources */,
+				93B2282F1EE44134002AD450 /* NoteEntity+CoreDataClass.swift in Sources */,
 				9345814B1ED16C18003B71DE /* ExpireDateView.swift in Sources */,
 				934581001ECDFA3B003B71DE /* StoreCacheOperation.swift in Sources */,
 				934581401ED16BF9003B71DE /* ColorPreviewItemView.swift in Sources */,
@@ -409,10 +430,13 @@
 				934581241ED16B74003B71DE /* NotesCollectionData.swift in Sources */,
 				934581251ED16B74003B71DE /* NotesCollectionLayout.swift in Sources */,
 				934580F31ECDB53D003B71DE /* DummyNotebookCache.swift in Sources */,
+				93B228281EE4206C002AD450 /* Model.xcdatamodeld in Sources */,
 				934581421ED16BF9003B71DE /* ColorPickerPreviewView.swift in Sources */,
 				9345812D1ED16BB2003B71DE /* ColorPickerPresentationAnimator.swift in Sources */,
 				934580FC1ECDBACB003B71DE /* FetchCacheOperation.swift in Sources */,
+				93B228321EE44C3F002AD450 /* LoadModelOperation.swift in Sources */,
 				934580F61ECDB564003B71DE /* Commons.swift in Sources */,
+				93B228361EE58828002AD450 /* Date+Interval.swift in Sources */,
 				9345810E1ED02F11003B71DE /* CachePolicy.swift in Sources */,
 				934581591ED16C38003B71DE /* ColorInfoView.swift in Sources */,
 				934581551ED16C38003B71DE /* ColorPickerView.swift in Sources */,
@@ -586,6 +610,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		93B228261EE4206C002AD450 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				93B228271EE4206C002AD450 /* Model.xcdatamodel */,
+			);
+			currentVersion = 93B228271EE4206C002AD450 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 934580D41ECDB43B003B71DE /* Project object */;
 }

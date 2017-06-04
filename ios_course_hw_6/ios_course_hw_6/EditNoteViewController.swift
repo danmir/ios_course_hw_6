@@ -40,6 +40,8 @@ class EditNoteViewController: UIViewController, EditNoteViewProtocol, ColorPicke
             editNoteView.colorPickerPreview.currentColor = note.color
         } else {
             editNoteView.noteTitle.text = "New Note Title"
+            editNoteView.expireDateView.destroyDateSwitch.isOn = false
+            editNoteView.expireDateView.destroyDatePickerIsOn(state: false)
         }
     }
     

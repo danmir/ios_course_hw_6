@@ -42,8 +42,8 @@ extension Note {
                 return nil
         }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         
         var expireDate: Date? = nil
         if let expireDateInt = json["destroy_date"] as? Int {
@@ -68,10 +68,13 @@ extension Note {
             res["color"] = color.toHexString()
         }
         
+//        if let expireDate = expireDate {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//            res["destroy_date"] = dateFormatter.string(from: expireDate)
+//        }
         if let expireDate = expireDate {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            res["destroy_date"] = dateFormatter.string(from: expireDate)
+            res["destroy_date"] = expireDate.secondsSince1970
         }
         
         return res

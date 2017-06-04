@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class NotesViewController: UIViewController, UICollectionViewDelegate {
 
@@ -27,6 +28,7 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     var isEditingState = false
     
     let dummyNotebook = DummyNotebook.init(withSize: 15)
+    var fetchedResultsController: NSFetchedResultsController<NoteEntity>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,14 +47,42 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
         navigationItem.leftBarButtonItem?.target = self
         navigationItem.leftBarButtonItem?.action = #selector(editButtonPressed(_:))
         
-        NotesManager.shared.updateCache { error in
-            if let error = error {
-                print("Can't update notes on start \(error)")
-            }
+        let loadModelOperation = LoadModelOperation { context in
             DispatchQueue.main.async {
-                self.notesCollectionView.reloadData()
+                let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
+                request.sortDescriptors = [NSSortDescriptor(key: "uid", ascending: false)]
+                request.fetchLimit = 100
+                
+                let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+                controller.managedObjectContext.mergePolicy = NSOverwriteMergePolicy
+                //controller.delegate = self
+                self.fetchedResultsController = controller
+                //self.fetchedResultsController?.delegate = self
+                self.updateUI()
             }
         }
+        loadModelOperation.taskQOS = .cache
+        Dispatcher.shared.addOperation(operation: loadModelOperation)
+            
+//        NotesManager.shared.updateCache { error in
+//            if let error = error {
+//                print("Can't update notes on start \(error)")
+//            }
+//            DispatchQueue.main.async {
+//                self.notesCollectionView.reloadData()
+//            }
+//        }
+    }
+    
+    func updateUI() {
+        do {
+            try fetchedResultsController?.performFetch()
+        }
+        catch {
+            print("Error in the fetched results controller: \(error).")
+        }
+        
+        notesCollectionView.reloadData()
     }
     
     func calcCellSizes(withSize size: CGSize) -> (maxMultiplier: CGFloat, minWidthPerItem: CGFloat) {
@@ -141,17 +171,22 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editNoteSegue" {
             let editNoteViewController = segue.destination as! EditNoteViewController
             let indexPath = sender as! IndexPath
             
-            guard let noteIndex = indexPath.last, let notes = NotesManager.shared.getCachedNotes() else {
+            guard let noteEntity = fetchedResultsController?.object(at: indexPath) else {
                 fatalError("No such note to edit \(indexPath)")
             }
             
-            let note = notes[noteIndex]
+//            guard let noteIndex = indexPath.last, let notes = NotesManager.shared.getCachedNotes() else {
+//                fatalError("No such note to edit \(indexPath)")
+//            }
+//            
+//            let note = notes[noteIndex]
+            let note = NoteEntity.entityToNote(noteEntity: noteEntity)
+            
             editNoteViewController.note = note
             
             let backItem = UIBarButtonItem()
@@ -194,12 +229,13 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
      }
      */
     @IBAction func retryButton(_ sender: Any) {
-        NotesManager.shared.updateCache { error in
+        NotesManager.shared.updateCache(context: (fetchedResultsController?.managedObjectContext)!) { error in
             if let error = error {
                 print("Can't update notes on start \(error)")
             }
             DispatchQueue.main.async {
-                self.notesCollectionView.reloadData()
+                //self.notesCollectionView.reloadData()
+                self.updateUI()
             }
         }
     }
@@ -208,10 +244,15 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
         if let editNoteView = editNoteViewController.editNoteView,
             let noteContent = editNoteView.noteTitle.text {
 
+            var date: Date?
+            if editNoteView.expireDateView.destroyDateSwitch.isOn {
+                date = editNoteView.expireDateView.destroyDatePicker.date
+            }
+            
             if let uid = editNoteViewController.note?.uid {
-                return Note(title: noteContent, content: editNoteView.noteText.text, color: editNoteView.colorPickerPreview.currentColor, uid: uid)
+                return Note(title: noteContent, content: editNoteView.noteText.text, color: editNoteView.colorPickerPreview.currentColor, uid: uid, expireDate: date)
             } else {
-                return Note(title: noteContent, content: editNoteView.noteText.text, color: editNoteView.colorPickerPreview.currentColor)
+                return Note(title: noteContent, content: editNoteView.noteText.text, color: editNoteView.colorPickerPreview.currentColor, expireDate: date)
             }
         } else {
             return nil
@@ -224,24 +265,26 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
             if let editedNote = getEditedNoteFrom(editNoteViewController: editNoteViewController) {
                 // Так отличаем новую от редактируемой
                 if editNoteViewController.note == nil {
-                    NotesManager.shared.addNote(note: editedNote) { error in
+                    NotesManager.shared.addNote(context: (fetchedResultsController?.managedObjectContext)!, note: editedNote) { error in
                         if let error = error {
                             print("Can't add new note \(error)")
                         }
                         DispatchQueue.main.async {
-                            print(NotesManager.shared.getCachedNotes())
-                            self.notesCollectionView.reloadData()
+                            self.updateUI()
+//                            print(NotesManager.shared.getCachedNotes())
+//                            self.notesCollectionView.reloadData()
                         }
                     }
                     return
                 }
-                NotesManager.shared.editNote(note: editedNote) { error in
+                NotesManager.shared.editNote(context: (fetchedResultsController?.managedObjectContext)!, note: editedNote) { error in
                     if let error = error {
                         print("Can't edit note \(error)")
                     }
                     DispatchQueue.main.async {
-                        print(NotesManager.shared.getCachedNotes())
-                        self.notesCollectionView.reloadData()
+                        self.updateUI()
+//                        print(NotesManager.shared.getCachedNotes())
+//                        self.notesCollectionView.reloadData()
                     }
                 }
             }

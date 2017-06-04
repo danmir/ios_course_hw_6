@@ -13,30 +13,42 @@ extension NotesViewController: UICollectionViewDataSource {
     // MARK: UICollectionViewDataSource
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+//        return 1
+        return fetchedResultsController?.sections?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let notes = NotesManager.shared.getCachedNotes() else { return 0 }
-        return notes.count
-        //return dummyNotebook.notesCollection.count
+//        guard let notes = NotesManager.shared.getCachedNotes() else { return 0 }
+//        return notes.count
+        
+        let section = fetchedResultsController?.sections?[section]
+        return section?.numberOfObjects ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! NoteCollectionViewCell
         
-        guard let noteIndex = indexPath.last, let notes = NotesManager.shared.getCachedNotes() else {
+        guard let noteEntity = fetchedResultsController?.object(at: indexPath) else {
             cell.noteText.text = "Dummy text"
             cell.noteTitle.text = "Dummy title"
+            cell.colorTriangle.color = UIColor.white
             return cell
         }
         
-        let note = notes[noteIndex]
-        //let note = dummyNotebook.notesCollection[noteIndex]
+        cell.noteText.text = noteEntity.content
+        cell.noteTitle.text = noteEntity.title
+        cell.colorTriangle.color = UIColor(hexString: noteEntity.color!)!
+//        guard let noteIndex = indexPath.last, let notes = NotesManager.shared.getCachedNotes() else {
+//            cell.noteText.text = "Dummy text"
+//            cell.noteTitle.text = "Dummy title"
+//            return cell
+//        }
         
-        cell.noteText.text = note.content
-        cell.noteTitle.text = note.title
-        cell.colorTriangle.color = note.color
+//        let note = notes[noteIndex]
+//        
+//        cell.noteText.text = note.content
+//        cell.noteTitle.text = note.title
+//        cell.colorTriangle.color = note.color
         
         if isEditingState {
             cell.editing = true
@@ -51,14 +63,25 @@ extension NotesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEditingState {
-            let note = NotesManager.shared.getCachedNotes()![indexPath[1]]
-            NotesManager.shared.deleteNote(note: note) { error in
+            let noteEntity = fetchedResultsController?.object(at: indexPath)
+            let note = NoteEntity.entityToNote(noteEntity: noteEntity!)
+            
+            
+            //let note = NotesManager.shared.getCachedNotes()![indexPath[1]]
+            NotesManager.shared.deleteNote(context: (fetchedResultsController?.managedObjectContext)!, note: note) { error in
                 if let error = error {
                     print("Can't delete note \(error)")
                 } else {
                     DispatchQueue.main.async {
-                        self.notesCollectionView.deleteItems(at: [indexPath])
-                        self.notesCollectionView.reloadData()
+                        self.fetchedResultsController?.managedObjectContext.delete(noteEntity!)
+                        do {
+                            try self.fetchedResultsController?.managedObjectContext.save()
+                        } catch let error as NSError  {
+                            print("Could not save \(error), \(error.userInfo)")
+                        }
+                        self.updateUI()
+//                        self.notesCollectionView.deleteItems(at: [indexPath])
+//                        self.notesCollectionView.reloadData()
                     }
                 }
             }

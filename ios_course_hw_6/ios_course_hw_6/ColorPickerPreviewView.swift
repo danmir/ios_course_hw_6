@@ -43,7 +43,7 @@ protocol ColorPickerPreviewViewProtocol {
         }
         set {
             for colorNum in 0..<colors.count {
-                if colors[colorNum].isEqualWithConversion(newValue) {
+                if colors[colorNum].toHexString() == newValue.toHexString() {
                     currentCheckedIndex = colorNum
                     _currentColor = colors[colorNum]
                     setupItems()
