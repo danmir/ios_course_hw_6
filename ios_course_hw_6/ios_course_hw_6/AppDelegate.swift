@@ -12,17 +12,9 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    func reSchedule() {
-        Dispatcher.shared.reSchedule()
-    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        Dispatcher.setup(schedulerPolicy: SchedulerWeightedPolicy(numberOfQueues: Dispatcher.queuesCount, queuesWeights: [0.5, 0.3, 0.1, 0.1]))
-        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(reSchedule), userInfo: nil, repeats: true)
-                
         return true
     }
 
