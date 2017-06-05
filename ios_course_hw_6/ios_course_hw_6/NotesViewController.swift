@@ -57,10 +57,12 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
                 controller.managedObjectContext.mergePolicy = NSOverwriteMergePolicy
                 //controller.delegate = self
                 self.fetchedResultsController = controller
-                //self.fetchedResultsController?.delegate = self
                 self.updateUI()
+                
+                self.executeUpdateData();
             }
         }
+        
         loadModelOperation.taskQOS = .cache
         Dispatcher.shared.addOperation(operation: loadModelOperation)
             
@@ -72,6 +74,17 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
 //                self.notesCollectionView.reloadData()
 //            }
 //        }
+    }
+    
+    func executeUpdateData() {
+        NotesManager.shared.updateCache(context: (fetchedResultsController?.managedObjectContext)!) { error in
+            if let error = error {
+                print("Can't update notes \(error)")
+            }
+            DispatchQueue.main.async {
+                self.updateUI()
+            }
+        }
     }
     
     func updateUI() {
@@ -229,15 +242,7 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
      }
      */
     @IBAction func retryButton(_ sender: Any) {
-        NotesManager.shared.updateCache(context: (fetchedResultsController?.managedObjectContext)!) { error in
-            if let error = error {
-                print("Can't update notes on start \(error)")
-            }
-            DispatchQueue.main.async {
-                //self.notesCollectionView.reloadData()
-                self.updateUI()
-            }
-        }
+        executeUpdateData()
     }
     
     func getEditedNoteFrom(editNoteViewController: EditNoteViewController) -> Note? {
