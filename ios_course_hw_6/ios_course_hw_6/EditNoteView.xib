@@ -23,11 +23,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9AE-tS-S0T">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9AE-tS-S0T">
                     <rect key="frame" x="10" y="20" width="300" height="543"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C0F-kR-wJo">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="631"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C0F-kR-wJo">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="630.5"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eOU-Yz-kGB" userLabel="NoteTitle">
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
@@ -42,11 +42,11 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6uf-5F-YpL" customClass="ExpireDateView" customModule="ios_course_hw_6" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6uf-5F-YpL" customClass="ExpireDateView" customModule="ios_course_hw_6" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="263.5" width="300" height="267"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
-                                <view contentMode="scaleToFill" verticalHuggingPriority="249" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Os-Pg-IRx" customClass="ColorPickerPreviewView" customModule="ios_course_hw_6" customModuleProvider="target">
+                                <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="4Os-Pg-IRx" customClass="ColorPickerPreviewView" customModule="ios_course_hw_6" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="530.5" width="300" height="100"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <userDefinedRuntimeAttributes>

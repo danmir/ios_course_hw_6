@@ -30,6 +30,9 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     let dummyNotebook = DummyNotebook.init(withSize: 15)
     var fetchedResultsController: NSFetchedResultsController<NoteEntity>?
     
+    var dataFetchRequested = false
+    let oauthViewController = OauthViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +41,8 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
         
         self.notesCollectionView.delegate = self
         self.notesCollectionView.dataSource = self
+        
+        self.oauthViewController.delegate = self
         
         self.notesCollectionView.register(UINib(nibName: "NoteCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         
@@ -59,7 +64,12 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
                 self.fetchedResultsController = controller
                 self.updateUI()
                 
-                self.executeUpdateData();
+                //self.executeUpdateData()
+                self.dataFetchRequested = true
+                let isOauth = self.updateOauthTokenRequest()
+                if isOauth {
+                    self.executeUpdateData()
+                }
             }
         }
         
@@ -74,6 +84,21 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
 //                self.notesCollectionView.reloadData()
 //            }
 //        }
+    }
+    
+    func noTokenAlert() {
+        let alert = UIAlertController(title: "Oauth token", message: "Не удалось получить Oauth token. Нажмите 'Auth' чтобы попытаться еще раз", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Хорошо", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func updateOauthTokenRequest() -> Bool {
+        let defaults = UserDefaults.standard
+        guard let token = defaults.string(forKey: "token") else {
+            present(oauthViewController, animated: true, completion: nil)
+            return false
+        }
+        return true
     }
     
     func executeUpdateData() {
@@ -141,6 +166,12 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func editButtonPressed(_ sender: UIBarButtonItem) {
+        let isToken = updateOauthTokenRequest()
+        if !isToken {
+            noTokenAlert()
+            return
+        }
+        
         isEditingState = !isEditingState
         
         let newButton = UIBarButtonItem(barButtonSystemItem: (isEditingState) ? .done : .edit, target: self, action: #selector(editButtonPressed(_:)))
@@ -183,6 +214,16 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     }
     
     // MARK: - Navigation
+    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        let isToken = updateOauthTokenRequest()
+        if !isToken {
+            noTokenAlert()
+            return false
+        }
+        
+        return true
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editNoteSegue" {
@@ -242,7 +283,15 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
      }
      */
     @IBAction func retryButton(_ sender: Any) {
-        executeUpdateData()
+        dataFetchRequested = true
+        let isOauth = updateOauthTokenRequest()
+        if isOauth {
+            executeUpdateData()
+        }
+    }
+
+    @IBAction func authButton(_ sender: Any) {
+        updateOauthTokenRequest()
     }
     
     func getEditedNoteFrom(editNoteViewController: EditNoteViewController) -> Note? {

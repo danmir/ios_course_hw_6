@@ -52,7 +52,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ydt-rn-fct"/>
                                     <barButtonItem style="plain" id="bSw-Xj-TjU">
                                         <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="ZPb-En-YMO">
-                                            <rect key="frame" x="128" y="7" width="118" height="31"/>
+                                            <rect key="frame" x="128" y="6.5" width="118" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </slider>
                                     </barButtonItem>
@@ -77,11 +77,18 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cY5-jW-4IF">
-                            <connections>
-                                <segue destination="wpH-kr-EZx" kind="show" identifier="addNoteSegue" id="Fox-Yo-Vgi"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="cY5-jW-4IF">
+                                <connections>
+                                    <segue destination="wpH-kr-EZx" kind="show" identifier="addNoteSegue" id="Fox-Yo-Vgi"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Auth" id="Rrn-zl-qKc">
+                                <connections>
+                                    <action selector="authButton:" destination="D1o-5R-Doz" id="4ES-Ty-4YF"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="notesCollectionView" destination="XBY-nC-EP7" id="r7k-hh-bj2"/>

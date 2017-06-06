@@ -63,6 +63,9 @@
 		93B228321EE44C3F002AD450 /* LoadModelOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228311EE44C3F002AD450 /* LoadModelOperation.swift */; };
 		93B228341EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228331EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift */; };
 		93B228361EE58828002AD450 /* Date+Interval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228351EE58828002AD450 /* Date+Interval.swift */; };
+		93B228391EE5E895002AD450 /* OauthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228371EE5E895002AD450 /* OauthViewController.swift */; };
+		93B2283A1EE5E895002AD450 /* OauthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B228381EE5E895002AD450 /* OauthViewController.xib */; };
+		93B2283D1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B2283C1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -124,6 +127,9 @@
 		93B228311EE44C3F002AD450 /* LoadModelOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadModelOperation.swift; sourceTree = "<group>"; };
 		93B228331EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesViewController+ NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
 		93B228351EE58828002AD450 /* Date+Interval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Interval.swift"; sourceTree = "<group>"; };
+		93B228371EE5E895002AD450 /* OauthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthViewController.swift; sourceTree = "<group>"; };
+		93B228381EE5E895002AD450 /* OauthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OauthViewController.xib; sourceTree = "<group>"; };
+		93B2283C1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesViewController+OauthViewControllerProtocol.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,6 +240,7 @@
 				934581211ED16B73003B71DE /* NotesCollectionData.swift */,
 				934581221ED16B73003B71DE /* NotesCollectionLayout.swift */,
 				93B228331EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift */,
+				93B2283C1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift */,
 			);
 			name = NotesCollectionViewController;
 			sourceTree = "<group>";
@@ -313,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				934581321ED16BC4003B71DE /* EditNoteViewController.swift */,
+				93B2283B1EE681E7002AD450 /* OauthViewController */,
 				934581311ED16BBC003B71DE /* ColorPickerViewController */,
 				934581261ED16B84003B71DE /* NotesCollectionViewController */,
 			);
@@ -327,6 +335,15 @@
 				9345815D1ED16C41003B71DE /* ColorPicker */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		93B2283B1EE681E7002AD450 /* OauthViewController */ = {
+			isa = PBXGroup;
+			children = (
+				93B228371EE5E895002AD450 /* OauthViewController.swift */,
+				93B228381EE5E895002AD450 /* OauthViewController.xib */,
+			);
+			name = OauthViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,6 +408,7 @@
 				934580EA1ECDB43B003B71DE /* LaunchScreen.storyboard in Resources */,
 				934581631ED16C85003B71DE /* Main.storyboard in Resources */,
 				934581561ED16C38003B71DE /* ColorPickerView.xib in Resources */,
+				93B2283A1EE5E895002AD450 /* OauthViewController.xib in Resources */,
 				9345814A1ED16C18003B71DE /* ExpireDateView.xib in Resources */,
 				934580E71ECDB43B003B71DE /* Assets.xcassets in Resources */,
 				934581481ED16C18003B71DE /* EditNoteView.xib in Resources */,
@@ -442,8 +460,10 @@
 				934581551ED16C38003B71DE /* ColorPickerView.swift in Sources */,
 				9345813A1ED16BD2003B71DE /* NoteCollectionViewCell.swift in Sources */,
 				934581581ED16C38003B71DE /* ColorCursor.swift in Sources */,
+				93B228391EE5E895002AD450 /* OauthViewController.swift in Sources */,
 				934581651ED16D0A003B71DE /* DummyNotebook.swift in Sources */,
 				9345815C1ED16C38003B71DE /* GradientHelper.swift in Sources */,
+				93B2283D1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift in Sources */,
 				934581381ED16BD2003B71DE /* NoteEditMark.swift in Sources */,
 				934581121ED038CB003B71DE /* APINotesOperation.swift in Sources */,
 				934EB4161ED2F27D001409F8 /* RetryOperation.swift in Sources */,

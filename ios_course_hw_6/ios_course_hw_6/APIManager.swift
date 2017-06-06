@@ -9,7 +9,7 @@
 import Foundation
 
 private let _sharedManager = APIManager()
-let accessToken = "NorthPole"
+//let accessToken = "NorthPole"
 
 class APIManager {
     class var shared: APIManager {
@@ -19,6 +19,17 @@ class APIManager {
     let scheme = "http"
     let host = "notes.mrdekk.ru"
     let maxRetriesCount = 3
+    
+    var accessToken: String {
+        get {
+            let defaults = UserDefaults.standard
+            if let token = defaults.string(forKey: "token") {
+                return token
+            } else {
+                return ""
+            }
+        }
+    }
     
     init() {}
     
@@ -34,7 +45,7 @@ class APIManager {
     func createRequest(withBody body: Data? = nil, method: String, url: URL?) -> URLRequest {
         var request = URLRequest(url: url!)
         request.httpMethod = method
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("OAuth \(accessToken)", forHTTPHeaderField: "Authorization")
         
         if let body = body {
             request.httpBody = body
