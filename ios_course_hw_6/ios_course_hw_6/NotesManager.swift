@@ -20,9 +20,9 @@ class NotesManager {
         return DummyNotebookCache.shared.notesCollection
     }
     
-    func getNotes(context: NSManagedObjectContext, complitionHandler: @escaping ([Note]?) -> ()) {
+    func getNotes(complitionHandler: @escaping ([Note]?) -> ()) {
         if DummyNotebookCache.shared.notesCollection.count == 0 {
-            updateCache(context: context) { error in
+            updateCache { error in
                 if (error != nil) {
                     complitionHandler(nil)
                 }
@@ -39,27 +39,13 @@ class NotesManager {
         return cachesFolder.appendingPathComponent(cacheFileName)
     }
     
-//    func updateOperations(cacheFile: URL, apiRequestStatus: APIRequestStatus, cachePolicy: CachePolicy) ->
-//        (getNotesOperation: APINotesOperation, storeCacheOperation: StoreCacheOperation) {
-//            let getNotesOperation = APINotesOperation(method: .GET, cacheFile: cacheFile, apiRequestStatus: apiRequestStatus) { error in
-//                print("getNotesOperationHandler")
-//            }
-//            let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
-//                print("storeCacheHandler after get")
-//            }
-//            getNotesOperation.taskQOS = .network
-//            storeCacheOperation.taskQOS = .cache
-//            storeCacheOperation.addDependency(getNotesOperation)
-//            return (getNotesOperation, storeCacheOperation)
-//    }
-    
-    func updateCache(context: NSManagedObjectContext, complitionHandler: @escaping (Error?) -> ()) {
+    func updateCache(complitionHandler: @escaping (Error?) -> ()) {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.replace)
         
         let apiRequestStatus = APIRequestStatus()
         
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy, context: context) {
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after get")
             complitionHandler(apiRequestStatus.lastError)
         }
@@ -81,13 +67,13 @@ class NotesManager {
         Dispatcher.shared.addOperation(operation: storeCacheOperation)
     }
     
-    func addNote(context: NSManagedObjectContext, note: Note, complitionHandler: @escaping (Error?) -> ()) {
+    func addNote(note: Note, complitionHandler: @escaping (Error?) -> ()) {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.add)
         
         let apiRequestStatus = APIRequestStatus()
         
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy, context: context) {
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after add")
             complitionHandler(apiRequestStatus.lastError)
         }
@@ -108,13 +94,13 @@ class NotesManager {
         Dispatcher.shared.addOperation(operation: storeCacheOperation)
     }
     
-    func editNote(context: NSManagedObjectContext, note: Note, complitionHandler: @escaping (Error?) -> ()) {
+    func editNote(note: Note, complitionHandler: @escaping (Error?) -> ()) {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.edit)
         
         let apiRequestStatus = APIRequestStatus()
         
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy, context: context) {
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after add")
             complitionHandler(apiRequestStatus.lastError)
         }
@@ -135,13 +121,13 @@ class NotesManager {
         Dispatcher.shared.addOperation(operation: storeCacheOperation)
     }
     
-    func deleteNote(context: NSManagedObjectContext, note: Note, complitionHandler: @escaping (Error?) -> ()) {
+    func deleteNote(note: Note, complitionHandler: @escaping (Error?) -> ()) {
         let cacheFile = getCacheFile()
         let cachePolicy = CachePolicy(withPolicy: CachePolicies.delete)
         
         let apiRequestStatus = APIRequestStatus()
         
-        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy, context: context) {
+        let storeCacheOperation = StoreCacheOperation(cacheFile: cacheFile, apiRequestStatus: apiRequestStatus, cachePolicy: cachePolicy) {
             print("storeCacheHandler after delete")
             complitionHandler(apiRequestStatus.lastError)
         }

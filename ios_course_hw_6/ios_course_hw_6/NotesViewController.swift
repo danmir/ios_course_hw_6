@@ -33,6 +33,8 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     var dataFetchRequested = false
     let oauthViewController = OauthViewController()
     
+    let tmpContext = CoreDataManager.instance.managedObjectContext
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,30 +54,40 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
         navigationItem.leftBarButtonItem?.target = self
         navigationItem.leftBarButtonItem?.action = #selector(editButtonPressed(_:))
         
-        let loadModelOperation = LoadModelOperation { context in
-            DispatchQueue.main.async {
-                let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
-                request.sortDescriptors = [NSSortDescriptor(key: "uid", ascending: false)]
-                request.fetchLimit = 100
-                
-                let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-                controller.managedObjectContext.mergePolicy = NSOverwriteMergePolicy
-                //controller.delegate = self
-                self.fetchedResultsController = controller
-                self.updateUI()
-                
-                //self.executeUpdateData()
-                self.dataFetchRequested = true
-                let isOauth = self.updateOauthTokenRequest()
-                if isOauth {
-                    self.executeUpdateData()
-                }
+//        let loadModelOperation = LoadModelOperation { context in
+//            DispatchQueue.main.async {
+//                let request: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
+//                request.sortDescriptors = [NSSortDescriptor(key: "uid", ascending: false)]
+//                request.fetchLimit = 100
+//                
+//                let controller = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+//                controller.managedObjectContext.mergePolicy = NSOverwriteMergePolicy
+//                //controller.delegate = self
+//                self.fetchedResultsController = controller
+//                self.updateUI()
+//                
+//                //self.executeUpdateData()
+//                self.dataFetchRequested = true
+//                let isOauth = self.updateOauthTokenRequest()
+//                if isOauth {
+//                    self.executeUpdateData()
+//                }
+//            }
+//        }
+//        
+//        loadModelOperation.taskQOS = .cache
+//        Dispatcher.shared.addOperation(operation: loadModelOperation)
+        
+        DispatchQueue.main.async {
+            self.updateUI()
+            
+            self.dataFetchRequested = true
+            let isOauth = self.updateOauthTokenRequest()
+            if isOauth {
+                self.executeUpdateData()
             }
         }
         
-        loadModelOperation.taskQOS = .cache
-        Dispatcher.shared.addOperation(operation: loadModelOperation)
-            
 //        NotesManager.shared.updateCache { error in
 //            if let error = error {
 //                print("Can't update notes on start \(error)")
@@ -102,7 +114,7 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func executeUpdateData() {
-        NotesManager.shared.updateCache(context: (fetchedResultsController?.managedObjectContext)!) { error in
+        NotesManager.shared.updateCache { error in
             if let error = error {
                 print("Can't update notes \(error)")
             }
@@ -113,13 +125,14 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func updateUI() {
-        do {
-            try fetchedResultsController?.performFetch()
-        }
-        catch {
-            print("Error in the fetched results controller: \(error).")
-        }
-        
+        Store.instance.performFetch()
+//        do {
+//            try fetchedResultsController?.performFetch()
+//        }
+//        catch {
+//            print("Error in the fetched results controller: \(error).")
+//        }
+//        
         notesCollectionView.reloadData()
     }
     
@@ -228,18 +241,24 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editNoteSegue" {
             let editNoteViewController = segue.destination as! EditNoteViewController
-            let indexPath = sender as! IndexPath
             
-            guard let noteEntity = fetchedResultsController?.object(at: indexPath) else {
+            let indexPath = sender as! IndexPath
+            let noteIndex = indexPath.last!
+            
+            guard let note = Store.instance.notesCache?[noteIndex] else {
                 fatalError("No such note to edit \(indexPath)")
             }
+            
+//            guard let noteEntity = fetchedResultsController?.object(at: indexPath) else {
+//                fatalError("No such note to edit \(indexPath)")
+//            }
             
 //            guard let noteIndex = indexPath.last, let notes = NotesManager.shared.getCachedNotes() else {
 //                fatalError("No such note to edit \(indexPath)")
 //            }
 //            
 //            let note = notes[noteIndex]
-            let note = NoteEntity.entityToNote(noteEntity: noteEntity)
+           // let note = NoteEntity.entityToNote(noteEntity: noteEntity)
             
             editNoteViewController.note = note
             
@@ -319,7 +338,7 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
             if let editedNote = getEditedNoteFrom(editNoteViewController: editNoteViewController) {
                 // Так отличаем новую от редактируемой
                 if editNoteViewController.note == nil {
-                    NotesManager.shared.addNote(context: (fetchedResultsController?.managedObjectContext)!, note: editedNote) { error in
+                    NotesManager.shared.addNote(note: editedNote) { error in
                         if let error = error {
                             print("Can't add new note \(error)")
                         }
@@ -331,7 +350,7 @@ class NotesViewController: UIViewController, UICollectionViewDelegate {
                     }
                     return
                 }
-                NotesManager.shared.editNote(context: (fetchedResultsController?.managedObjectContext)!, note: editedNote) { error in
+                NotesManager.shared.editNote(note: editedNote) { error in
                     if let error = error {
                         print("Can't edit note \(error)")
                     }

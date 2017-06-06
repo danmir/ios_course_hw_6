@@ -22,7 +22,7 @@ class StoreCacheOperation: AsyncOperation {
     let cachePolicy: CachePolicy
     let context: NSManagedObjectContext
     
-    init(cacheFile: URL, apiRequestStatus: APIRequestStatus, cachePolicy: CachePolicy, context: NSManagedObjectContext, complitionHandler: @escaping (Void) -> Void) {
+    init(cacheFile: URL, apiRequestStatus: APIRequestStatus, cachePolicy: CachePolicy, complitionHandler: @escaping (Void) -> Void) {
         self.complitionHandler = complitionHandler
         self.cacheFile = cacheFile
         self.apiRequestStatus = apiRequestStatus
@@ -31,6 +31,8 @@ class StoreCacheOperation: AsyncOperation {
 //        let importContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
 //        importContext.persistentStoreCoordinator = context.persistentStoreCoordinator
 //        importContext.mergePolicy = NSOverwriteMergePolicy
+        
+        let context = CoreDataManager.instance.getBackgroundContext()
         self.context = context
         super.init()
     }
@@ -49,7 +51,6 @@ class StoreCacheOperation: AsyncOperation {
             if let jsonResult = jsonResult as? [[String: Any]] {
                 for note in jsonResult {
                     if let note = Note.parse(json: note) {
-                        //cachePolicyApplier(note: note)
                         context.performAndWait({
                             self.insert(parsed: note)
                         })
@@ -57,7 +58,6 @@ class StoreCacheOperation: AsyncOperation {
                 }
             } else if let jsonResult = jsonResult as? [String: Any] {
                 if let note = Note.parse(json: jsonResult) {
-                    //cachePolicyApplier(note: note)
                     context.performAndWait({
                         self.insert(parsed: note)
                     })
@@ -125,22 +125,10 @@ class StoreCacheOperation: AsyncOperation {
             }
             catch let saveError as NSError {
                 error = saveError
+                print("Save error in StoreCacheOperation \(error)")
             }
         }
         
         return error
     }
-    
-    func cachePolicyApplier(note: Note) {
-        switch cachePolicy.state {
-        case .add:
-            DummyNotebookCache.shared.addNote(note: note)
-        case .delete:
-            DummyNotebookCache.shared.removeNote(byUid: note.uid)
-        case .replace, .edit:
-            DummyNotebookCache.shared.removeNote(byUid: note.uid)
-            DummyNotebookCache.shared.addNote(note: note)
-        }
-    }
-    
 }

@@ -66,6 +66,8 @@
 		93B228391EE5E895002AD450 /* OauthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228371EE5E895002AD450 /* OauthViewController.swift */; };
 		93B2283A1EE5E895002AD450 /* OauthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B228381EE5E895002AD450 /* OauthViewController.xib */; };
 		93B2283D1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B2283C1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift */; };
+		93B2283F1EE6E1E8002AD450 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B2283E1EE6E1E8002AD450 /* CoreDataManager.swift */; };
+		93B228411EE6EB90002AD450 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B228401EE6EB90002AD450 /* Store.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +132,8 @@
 		93B228371EE5E895002AD450 /* OauthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OauthViewController.swift; sourceTree = "<group>"; };
 		93B228381EE5E895002AD450 /* OauthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OauthViewController.xib; sourceTree = "<group>"; };
 		93B2283C1EE68C18002AD450 /* NotesViewController+OauthViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NotesViewController+OauthViewControllerProtocol.swift"; sourceTree = "<group>"; };
+		93B2283E1EE6E1E8002AD450 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		93B228401EE6EB90002AD450 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +223,7 @@
 				93B228261EE4206C002AD450 /* Model.xcdatamodeld */,
 				93B2282D1EE44134002AD450 /* NoteEntity+CoreDataClass.swift */,
 				93B2282E1EE44134002AD450 /* NoteEntity+CoreDataProperties.swift */,
+				93B228401EE6EB90002AD450 /* Store.swift */,
 			);
 			name = Cache;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				934581051ECF04A9003B71DE /* APIManager.swift */,
 				934580F71ECDB865003B71DE /* NotesManager.swift */,
 				934581641ED16D0A003B71DE /* DummyNotebook.swift */,
+				93B2283E1EE6E1E8002AD450 /* CoreDataManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -431,6 +437,7 @@
 				93B228301EE44134002AD450 /* NoteEntity+CoreDataProperties.swift in Sources */,
 				934581331ED16BC4003B71DE /* EditNoteViewController.swift in Sources */,
 				934580F81ECDB865003B71DE /* NotesManager.swift in Sources */,
+				93B228411EE6EB90002AD450 /* Store.swift in Sources */,
 				934581611ED16C67003B71DE /* CommonControl.swift in Sources */,
 				93B228341EE5547C002AD450 /* NotesViewController+ NSFetchedResultsControllerDelegate.swift in Sources */,
 				934581141ED05EE7003B71DE /* Dispatcher.swift in Sources */,
@@ -445,6 +452,7 @@
 				9345813B1ED16BD2003B71DE /* NoteCellColor.swift in Sources */,
 				934581491ED16C18003B71DE /* EditNoteView.swift in Sources */,
 				9345812E1ED16BB2003B71DE /* ColorPickerPresentationController.swift in Sources */,
+				93B2283F1EE6E1E8002AD450 /* CoreDataManager.swift in Sources */,
 				934581241ED16B74003B71DE /* NotesCollectionData.swift in Sources */,
 				934581251ED16B74003B71DE /* NotesCollectionLayout.swift in Sources */,
 				934580F31ECDB53D003B71DE /* DummyNotebookCache.swift in Sources */,
