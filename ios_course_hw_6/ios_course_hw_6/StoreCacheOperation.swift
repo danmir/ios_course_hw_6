@@ -93,22 +93,14 @@ class StoreCacheOperation: AsyncOperation {
                     entity.content = parsed.content
                     // TODO: Fix multiple transformation
                     entity.color = parsed.color.toHexString()
-                    if let expireDate = parsed.expireDate {
-                        entity.expireDate = String(expireDate.secondsSince1970)
-                    } else {
-                        entity.expireDate = nil
-                    }
+                    entity.expireDate = parsed.expireDate
                 } else {
                     let note = NSEntityDescription.insertNewObject(forEntityName: NoteEntity.entityName, into: self.context) as! NoteEntity
                     note.uid = parsed.uid
                     note.title = parsed.title
                     note.content = parsed.content
                     note.color = parsed.color.toHexString()
-                    if let expireDate = parsed.expireDate {
-                        note.expireDate = String(expireDate.secondsSince1970)
-                    } else {
-                        note.expireDate = nil
-                    }
+                    note.expireDate = parsed.expireDate
                 }
             } catch {
                 print("Error in finding current entities")

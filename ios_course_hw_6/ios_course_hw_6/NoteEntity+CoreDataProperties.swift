@@ -20,6 +20,6 @@ extension NoteEntity {
     @NSManaged public var title: String?
     @NSManaged public var content: String?
     @NSManaged public var color: String?
-    @NSManaged public var expireDate: String?
+    @NSManaged public var expireDate: Date?
 
 }

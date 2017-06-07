@@ -24,8 +24,7 @@ public class NoteEntity: NSManagedObject {
         let color = UIColor(hexString: noteEntity.color!)
    
         if let expireDate = noteEntity.expireDate {
-            let expireDateParsed = Date(seconds: expireDate)
-            let note = Note(title: noteEntity.title!, content: noteEntity.content!, color: color!, uid: noteEntity.uid!, expireDate: expireDateParsed)
+            let note = Note(title: noteEntity.title!, content: noteEntity.content!, color: color!, uid: noteEntity.uid!, expireDate: expireDate)
             return note
         }
         let note = Note(title: noteEntity.title!, content: noteEntity.content!, color: color!, uid: noteEntity.uid!, expireDate: nil)
